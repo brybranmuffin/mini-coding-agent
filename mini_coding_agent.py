@@ -610,7 +610,7 @@ class MiniAgent:
             answer = input(f"approve {name} {json.dumps(args, ensure_ascii=True)}? [y/N] ")
         except EOFError:
             return False
-        return answer.strip().lower() in {"y", "yes"}
+        return answer.strip().lower() in {"y", "yes", "yee", "ye", "yed", "yea", "yeah"}
 
     @staticmethod
     def parse(raw):
@@ -1006,6 +1006,14 @@ def main(argv=None):
         if user_input == "/reset":
             agent.reset()
             print("session reset")
+            continue
+        if user_input == "/refresh":
+            answer = input(f"This action will rebuild your workspace context and does not need to be run often. Would you like to proceed? [y/N] ")
+            resume_old = args.resume 
+            if answer.strip().lower() in set(["y", "yes"]):
+                args.resume = "latest"
+                agent = build_agent(args)
+            args.resume = resume_old
             continue
 
         print()

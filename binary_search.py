@@ -1,4 +1,7 @@
 def binary_search(nums, target):
+    if nums != sorted(nums):
+        raise ValueError("Input list must be sorted in ascending order")
+    
     left, right = 0, len(nums) - 1
     while left <= right:
         mid = (left + right) // 2
